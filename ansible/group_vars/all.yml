@@ -438,6 +438,13 @@ ceilometer_database_type: "mongodb"
 ceilometer_event_type: "mongodb"
 
 
+#######################
+# Barbican options
+#######################
+# Valid options are [ simple_crypto, p11_crypto ]
+barbican_crypto_plugin: "simple_crypto"
+barbican_library_path: "/usr/lib/libCryptoki2_64.so"
+
 ########################
 ### Panko options
 ########################
@@ -484,7 +491,7 @@ nova_backend: "{{ 'rbd' if nova_backend_ceph | bool else 'default' }}"
 #######################
 # Horizon options
 #######################
-horizon_backend_database: "no"
+horizon_backend_database: "{{ enable_murano | bool }}"
 
 #################
 # Octavia options

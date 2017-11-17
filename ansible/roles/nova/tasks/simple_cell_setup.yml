@@ -2,6 +2,7 @@
 - name: Waiting for nova-compute service up
   command: >
     docker exec kolla_toolbox openstack
+    --os-interface internal
     --os-auth-url {{ admin_protocol }}://{{ kolla_internal_fqdn }}:{{ keystone_admin_port }}/v3
     --os-identity-api-version 3
     --os-project-domain-name default
@@ -26,5 +27,8 @@
   changed_when:
     - cell_setup | success
     - '"Cell0 is already setup" not in cell_setup.stdout'
+  failed_when:
+    - cell_setup.rc != 0
+    - '"No hosts found to map to cell, exiting." not in cell_setup.stdout'
   run_once: True
   delegate_to: "{{ groups['nova-api'][0] }}"

@@ -123,7 +123,6 @@
 
 - name: Apply role mariadb
   hosts: mariadb
-  serial: '{{ serial|default("0") }}'
   roles:
     - { role: mariadb,
         tags: mariadb,
@@ -225,6 +224,19 @@
         tags: ironic,
         when: enable_ironic | bool }
 
+- name: Apply role cinder
+  hosts:
+    - ceph-mon
+    - cinder-api
+    - cinder-backup
+    - cinder-scheduler
+    - cinder-volume
+  serial: '{{ serial|default("0") }}'
+  roles:
+    - { role: cinder,
+        tags: cinder,
+        when: enable_cinder | bool }
+
 - name: Apply role nova
   hosts:
     - ceph-mon
@@ -239,14 +251,6 @@
     - { role: nova,
         tags: nova,
         when: enable_nova | bool }
-
-- name: Apply role panko
-  hosts: panko-api
-  serial: '{{ serial|default("0") }}'
-  roles:
-    - { role: panko,
-        tags: panko,
-        when: enable_panko | bool }
 
 # (gmmaha): Please do not change the order listed here. The current order is a
 # workaround to fix the bug https://bugs.launchpad.net/kolla/+bug/1546789
@@ -273,19 +277,6 @@
     - { role: kuryr,
         tags: kuryr,
         when: enable_kuryr | bool }
-
-- name: Apply role cinder
-  hosts:
-    - ceph-mon
-    - cinder-api
-    - cinder-backup
-    - cinder-scheduler
-    - cinder-volume
-  serial: '{{ serial|default("0") }}'
-  roles:
-    - { role: cinder,
-        tags: cinder,
-        when: enable_cinder | bool }
 
 - name: Apply role heat
   hosts:
@@ -368,6 +359,14 @@
     - { role: mongodb,
         tags: mongodb,
         when: enable_mongodb | bool }
+
+- name: Apply role panko
+  hosts: panko-api
+  serial: '{{ serial|default("0") }}'
+  roles:
+    - { role: panko,
+        tags: panko,
+        when: enable_panko | bool }
 
 - name: Apply role manila
   hosts:

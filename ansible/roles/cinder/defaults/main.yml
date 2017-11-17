@@ -31,8 +31,9 @@ cinder_services:
       - "{{ node_config_directory }}/cinder-volume/:{{ container_config_directory }}/:ro"
       - "/etc/localtime:/etc/localtime:ro"
       - "/dev/:/dev/"
+      - "/lib/modules:/lib/modules:ro"
       - "/run/:/run/:shared"
-      - "{% if enable_iscsid | bool %}cinder:/var/lib/cinder{% endif %}"
+      - "cinder:/var/lib/cinder"
       - "{% if enable_iscsid | bool %}iscsi_info:/etc/iscsi{% endif %}"
       - "kolla_logs:/var/log/kolla/"
   cinder-backup:
@@ -46,7 +47,7 @@ cinder_services:
       - "/etc/localtime:/etc/localtime:ro"
       - "/dev/:/dev/"
       - "/run/:/run/:shared"
-      - "{% if enable_cinder_backend_lvm | bool %}cinder:/var/lib/cinder{% endif %}"
+      - "cinder:/var/lib/cinder"
       - "{% if enable_cinder_backend_lvm | bool %}iscsi_info:/etc/iscsi{% endif %}"
       - "kolla_logs:/var/log/kolla/"
 

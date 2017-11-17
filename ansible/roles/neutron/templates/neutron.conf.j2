@@ -35,7 +35,7 @@ host = {{ ansible_hostname }}_{{ item }}
 
 allow_overlapping_ips = true
 core_plugin = ml2
-service_plugins = router{% if enable_neutron_lbaas | bool %},neutron_lbaas.services.loadbalancer.plugin.LoadBalancerPluginv2{% endif %}{% if enable_neutron_qos | bool %},qos{% endif %}{% if enable_neutron_vpnaas | bool %},neutron_vpnaas.services.vpn.plugin.VPNDriverPlugin{% endif %}{% if neutron_plugin_agent == "sfc" %}flow_classifier,sfc{% endif %}{% if enable_neutron_fwaas | bool %},neutron.services.firewall.fwaas_plugin.FirewallPlugin{% endif %}
+service_plugins = router{% if enable_neutron_lbaas | bool %},lbaasv2{% endif %}{% if enable_neutron_qos | bool %},qos{% endif %}{% if enable_neutron_vpnaas | bool %},neutron_vpnaas.services.vpn.plugin.VPNDriverPlugin{% endif %}{% if neutron_plugin_agent == "sfc" %}flow_classifier,sfc{% endif %}{% if enable_neutron_fwaas | bool %},neutron.services.firewall.fwaas_plugin.FirewallPlugin{% endif %}
 
 {% if enable_neutron_agent_ha | bool %}
 dhcp_agents_per_network = {{ dhcp_agents_per_network }}
@@ -96,10 +96,9 @@ memcached_servers = {% for host in groups['memcached'] %}{% if orchestration_eng
 {% endif %}
 
 [oslo_messaging_notifications]
-{% if enable_ceilometer | bool or enable_searchlight | bool or enable_designate | bool %}
+{% if neutron_enabled_notification_topics %}
 driver = messagingv2
-{% set topics=["notifications" if enable_ceilometer | bool else "", "notifications_designate" if enable_designate | bool else ""] %}
-topics = {{ topics|reject("equalto", "")|list|join(",") }}
+topics = {{ neutron_enabled_notification_topics | map(attribute='name') | join(',') }}
 {% else %}
 driver = noop
 {% endif %}

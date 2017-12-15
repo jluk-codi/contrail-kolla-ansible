@@ -19,7 +19,9 @@ debian_pkg_install:
 
 redhat_pkg_install:
  - epel-release
- - docker-engine-1.13.0
+ - docker-engine-1.12.1
+ - python-docker-py
+ - python-oslo-config
  - git
  - python-setuptools
  - ntp

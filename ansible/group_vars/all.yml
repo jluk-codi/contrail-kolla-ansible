@@ -45,6 +45,11 @@ metadata_ssl_enable: "no"
 # <hostname>.pem, <hostname>-privkey.pem, ca-cert.pem files are present
 local_ssl_directory: "/etc/contrail_smgr/puppet/ssl"
 
+# contrail_additions : enable_ironic_inspector is set to "no" to control
+# ironic-inspector install and its usage.
+enable_ironic_inspector: "no"
+ironic_cleaning_network: "ironic-provision"
+
 ####################### CONTRAIL ADDITIONS - END ###########################
 
 # The "temp" files that are created before merge need to stay persistent due
@@ -374,6 +379,7 @@ enable_horizon_trove: "{{ enable_trove | bool }}"
 enable_horizon_watcher: "{{ enable_watcher | bool }}"
 enable_influxdb: "no"
 enable_ironic: "no"
+enable_ironic_notifications: "no"
 enable_iscsid: "{{ enable_cinder_backend_iscsi | bool or enable_cinder_backend_lvm | bool or enable_ironic | bool }}"
 enable_karbor: "no"
 enable_kuryr: "no"

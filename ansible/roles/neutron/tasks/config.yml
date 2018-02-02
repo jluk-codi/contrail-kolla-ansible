@@ -264,6 +264,8 @@
   local_action: stat path="{{ node_custom_config }}/neutron/policy.json"
   register: neutron_policy
 
+- include: config_opencontrail.yml
+
 - name: Copying over existing policy.json
   vars:
     service_name: "{{ item.key }}"
@@ -297,6 +299,7 @@
     image: "{{ item.value.image }}"
     privileged: "{{ item.value.privileged | default(False) }}"
     volumes: "{{ item.value.volumes }}"
+    environment: "{{ item.value.get('environment', dict()) }}"
   register: check_neutron_containers
   when:
     - action != "config"

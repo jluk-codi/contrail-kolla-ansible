@@ -50,6 +50,10 @@ local_ssl_directory: "/etc/contrail_smgr/puppet/ssl"
 enable_ironic_inspector: "no"
 ironic_cleaning_network: "ironic-provision"
 
+enable_contrail_horizon: "no"
+opencontrail_api_server_ip: "{{ contrail_api_interface_address }}"
+opencontrail_api_server_port: "8082"
+
 ####################### CONTRAIL ADDITIONS - END ###########################
 
 # The "temp" files that are created before merge need to stay persistent due
@@ -544,7 +548,6 @@ nova_backend: "{{ 'rbd' if nova_backend_ceph | bool else 'default' }}"
 # Horizon options
 #######################
 horizon_backend_database: "{{ enable_murano | bool }}"
-enable_contrail_horizon: "yes"
 
 #################
 # Octavia options

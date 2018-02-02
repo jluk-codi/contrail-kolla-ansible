@@ -75,6 +75,7 @@
     image: "{{ service.image }}"
     volumes: "{{ service.volumes }}"
     privileged: "{{ service.privileged | default(False) }}"
+    environment: "{{ service.environment }}"
   when:
     - action != "config"
     - service.enabled | bool
@@ -85,6 +86,7 @@
       or neutron_vpnaas_conf | changed
       or neutron_ml2_conf | changed
       or policy_json | changed
+      or contrailplugin_ini | changed
       or neutron_opencontrail_conf | changed
       or neutron_server_container | changed
 

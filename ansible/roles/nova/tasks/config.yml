@@ -133,6 +133,8 @@
   notify:
     - Restart nova-ssh container
 
+- include: config_opencontrail.yml
+
 - name: Check if policies shall be overwritten
   local_action: stat path="{{ node_custom_config }}/nova/policy.json"
   register: nova_policy

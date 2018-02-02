@@ -263,6 +263,7 @@
     - config_json.changed | bool
       or nova_conf.changed | bool
       or policy_json.changed | bool
+      or compute_rootwrap_conf | bool
       or nova_compute_container.changed | bool
 
 - name: Restart nova-compute-ironic container

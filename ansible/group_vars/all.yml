@@ -59,6 +59,8 @@ ironic_cleaning_network: "ironic-provision"
 enable_contrail_horizon: "no"
 opencontrail_api_server_ip: "{{ contrail_api_interface_address }}"
 opencontrail_api_server_port: "8082"
+opencontrail_collector_ip: "{{ contrail_api_interface_address }}"
+opencontrail_collector_port: "8081"
 
 ####################### CONTRAIL ADDITIONS - END ###########################
 

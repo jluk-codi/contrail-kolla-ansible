@@ -64,7 +64,7 @@
   with_items:
     - src: 00-record_transformer
       dest: 00-record_transformer
-    - src: "{{ '01-rewrite-0.14' if kolla_base_distro in ['debian', 'ubuntu'] else '01-rewrite-0.12' }}"
+    - src: "{{ '01-rewrite-0.14' if kolla_base_distro in ['debian', 'ubuntu'] else '01-rewrite-0.12' if kolla_base_distro in ['centos'] and openstack_release == '4.0.0' else '01-rewrite-0.14' }}"
       dest: 01-rewrite
 
 - name: Copying over tg-agent.conf

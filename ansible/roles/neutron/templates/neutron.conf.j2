@@ -62,8 +62,6 @@ dns_domain = {{ designate_ns_record }}.
 external_dns_driver = designate
 {% endif %}
 
-api_extensions_path = extensions:/usr/lib/python2.7/site-packages/neutron_plugin_contrail/extensions:/usr/lib/python2.7/site-packages/neutron_lbaas/extensions
-
 [nova]
 auth_url = {{ keystone_admin_url }}
 auth_type = password
